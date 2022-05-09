@@ -1,4 +1,5 @@
-.new_user_credentials.csv
+*.csv
+*.pem
 # Local .terraform directories
 **/.terraform/*
 

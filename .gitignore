@@ -1,3 +1,9 @@
+*.terraform*
+README_new.md
+.idea/
+*.tfvars
+terraform.*
+
 *.csv
 *.pem
 # Local .terraform directories

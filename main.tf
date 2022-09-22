@@ -84,9 +84,9 @@ resource "aws_security_group" "fcc_sg" {
   }
 
   ingress {
-    from_port = 22
-    to_port =  22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["${local.ifconfig_co_json.ip}/32"]
   }
 
@@ -114,7 +114,7 @@ resource "aws_key_pair" "generated_key" {
   key_name   = var.generated_key_name
   public_key = tls_private_key.dev_key.public_key_openssh
 
-  provisioner "local-exec" {    # Generate "terraform-key-pair.pem" in current directory
+  provisioner "local-exec" { # Generate "terraform-key-pair.pem" in current directory
     command = <<-EOT
       echo '${tls_private_key.dev_key.private_key_pem}' > ./'${var.generated_key_name}'.pem
       chmod 400 ./'${var.generated_key_name}'.pem
@@ -125,12 +125,12 @@ resource "aws_key_pair" "generated_key" {
 
 resource "aws_instance" "dev_node" {
   instance_type = "t2.micro"
-  ami = data.aws_ami.amazon-linux-2.id
+  ami           = data.aws_ami.amazon-linux-2.id
 
-  key_name = aws_key_pair.generated_key.id
+  key_name               = aws_key_pair.generated_key.id
   vpc_security_group_ids = [aws_security_group.fcc_sg.id]
-  subnet_id = aws_subnet.fcc_public_subnet.id
-  user_data = file("userdata.tpl")
+  subnet_id              = aws_subnet.fcc_public_subnet.id
+  user_data              = file("userdata.tpl")
 
   root_block_device {
     volume_size = 10
@@ -139,12 +139,12 @@ resource "aws_instance" "dev_node" {
   tags = {
     Name = "dev-node"
   }
-      
+
 }
 
 output "ec2_global_ips" {
-  value = "${aws_instance.dev_node.*.public_ip}"
-  
+  value = aws_instance.dev_node.*.public_ip
+
 }
 
 

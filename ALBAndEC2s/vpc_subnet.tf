@@ -15,10 +15,6 @@ resource "aws_subnet" "public_subnet" {
   cidr_block              = cidrsubnet(var.vpc_cidr, 8, each.key)
   availability_zone       = local.az_names[each.key]
   map_public_ip_on_launch = true
-
-  tags = {
-    "Name" = "Public-Subnet-${count.index}"
-  }
 }
 
 //creating internet gateway

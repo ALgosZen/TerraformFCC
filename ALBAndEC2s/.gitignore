@@ -1,0 +1,5 @@
+*.terraform*
+README_new.md
+.idea/
+*.tfvars
+terraform.*
